@@ -5,6 +5,9 @@ import Card from "../ui/card/Card.vue";
 import CardContent from "../ui/card/CardContent.vue";
 import CardFooter from "../ui/card/CardFooter.vue";
 import { computed } from "vue";
+import Modal from "../Modal.vue";
+import DialogTrigger from "../ui/dialog/DialogTrigger.vue";
+import DialogClose from "../ui/dialog/DialogClose.vue";
 
 const store = useNoteStore();
 
@@ -52,14 +55,36 @@ const characterLength = computed(() => {
           Edit
         </Button>
       </RouterLink>
-      <Button
-        @click="deleteNote"
-        size="sm"
-        variant="destructive"
-        class="flex-1 cursor-pointer"
+      <Modal
+        title="Delete"
+        description="Are you sure you want to delete this note?"
       >
-        Delete
-      </Button>
+        <template #trigger>
+          <Button size="sm" variant="destructive" class="flex-1 cursor-pointer">
+            Delete
+          </Button>
+        </template>
+
+        <template #actions>
+          <div class="flex gap-2">
+            <DialogTrigger as-child>
+              <Button size="sm" variant="outline" class="flex-1 cursor-pointer">
+                Cancel
+              </Button>
+            </DialogTrigger>
+            <DialogClose as-child>
+              <Button
+                @click="deleteNote"
+                size="sm"
+                variant="destructive"
+                class="flex-1 cursor-pointer"
+              >
+                Confirm
+              </Button>
+            </DialogClose>
+          </div>
+        </template>
+      </Modal>
     </CardFooter>
   </Card>
 </template>

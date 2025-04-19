@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import Button from "../../ui/button/Button.vue";
+import { ref } from "vue";
 const props = defineProps<{
   modelValue: string;
   disabled?: boolean;
@@ -10,10 +12,16 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["update:modelValue", "submit"]);
+const textAreaRef = ref<HTMLTextAreaElement | null>(null);
 
 function handleSubmit() {
   emit("submit");
+  textAreaRef.value?.focus();
 }
+
+onMounted(() => {
+  textAreaRef.value?.focus();
+});
 </script>
 
 <template>
@@ -28,7 +36,7 @@ function handleSubmit() {
       <div class="flex flex-col gap-2">
         <label for="content" />
         <textarea
-          ref="focusNote"
+          ref="textAreaRef"
           class="p-2 border border-slate-100 rounded-xs"
           id="content"
           name="content"
