@@ -5,6 +5,7 @@ import { useNoteStore } from "../../../stores/noteStore";
 import { ref } from "vue";
 import { onMounted } from "vue";
 import { computed } from "vue";
+import Button from "../../ui/button/Button.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -32,12 +33,22 @@ function submit() {
 </script>
 
 <template>
-  <Form
-    title="Edit Notes"
-    v-model="content"
-    @submit="submit"
-    :disabled="isDisabled"
-    btn-text="Update"
-    :maximal-char="char"
-  />
+  <div class="flex flex-col">
+    <Button
+      class="text-xs mb-4 cursor-pointer self-start"
+      size="sm"
+      variant="outline"
+      @click="router.back()"
+    >
+      Back
+    </Button>
+    <Form
+      title="Edit Notes"
+      v-model="content"
+      @submit="submit"
+      :disabled="isDisabled"
+      btn-text="Update"
+      :maximal-char="char"
+    />
+  </div>
 </template>
